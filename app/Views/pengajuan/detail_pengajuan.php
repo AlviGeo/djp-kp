@@ -175,7 +175,7 @@
           <!-- /.card-body -->
           <div class="card-footer">
             <div class="btn-group">
-              <a href="<?php echo base_url('pengajuan/closepengajuan/'.$detail_pengajuan['ajuanId']); ?>" class="btn btn-primary btn-info" onClick="return confirm('Apakah anda yakin closing pengajuan <?= $detail_pengajuan['ajuanNamaWP']?>')"><i class="fas fa-window-close"></i> Close</a>
+              <a href="<?php echo base_url('pengajuan/closePengajuan/'.$detail_pengajuan['ajuanId']); ?>" class="btn btn-primary btn-info" onClick="return confirm('Apakah anda yakin closing pengajuan <?= $detail_pengajuan['ajuanNamaWP']?>')"><i class="fas fa-window-close"></i> Close</a>
             </div>
             &nbsp;
             <!-- <div class="btn-group">
