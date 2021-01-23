@@ -9,23 +9,23 @@ class MPengajuansub extends Model
 
 	protected $table = "pengajuansub";
 
-	public function getPengajuansub($sub_id = false)
+	public function getPengajuansub($id = false)
 	{
 
-		if ($sub_id === false) {
+		if ($id === false) {
 			// $builder =  $this->db->table('pengajuan');
 			// return $builder->get();
 			return $this->db->table('pengajuansub')
 				->get();
 		} else {
 			return $this->table('pengajuansub')
-				->where('ajuanSUBID', $sub_id)
+				->where('ajuanSUBID', $id)
 				->get()
 				->getRowArray();
 		}
 	}
 
-	public function getDetailPengajuansub($sub_id = false)
+	public function getDetailPengajuansub($id = false)
 	{
 		$builder = $this->db->table('pengajuansub');
 		return $builder->get();
@@ -86,35 +86,35 @@ class MPengajuansub extends Model
 		return $query;
 	}
 
-	public function closePengajuan($data, $sub_id)
+	public function closePengajuan($data, $id)
 	{
-		$query = $this->db->table('pengajuansub')->update($data, ['ajuanSUBID' => $sub_id]);
+		$query = $this->db->table('pengajuansub')->update($data, ['ajuanSUBID' => $id]);
 		return $query;
 	}
 
 	// Objek Digugat
-	public function get_ObjekDigugat($sub_id = false)
+	public function get_ObjekDigugat($id = false)
 	{
-		$builder = $this->db->table('objekdigugat')
-			->where('OBJGUGATid', $sub_id)
+		return $this->db->table('objekdigugat')
+			->where('OBJGUGATid', $id)
 			->get()
 			->getResultArray();
 	}
 
 	// Ketetapan Pajak Sub
-	public function get_KetetapanPajakSub($sub_id = false)
+	public function get_KetetapanPajakSub($id = false)
 	{
 		return $this->db->table('ketetapanpajaksub')
-			->where('TETAPAJid', $sub_id)
+			->where('TETAPAJid', $id)
 			->get()
 			->getResultArray();
 	}
 
 	// Respon Kanwil
-	public function get_ResponKanwil($sub_id = false)
+	public function get_ResponKanwil($id = false)
 	{
 		return $this->db->table('responkanwil')
-			->where('RESPid', $sub_id)
+			->where('RESPid', $id)
 			->get()
 			->getResultArray();
 	}

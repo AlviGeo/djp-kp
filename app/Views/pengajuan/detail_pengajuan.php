@@ -1274,7 +1274,7 @@
         var vajuanID = $(this).attr("ajuanID");
         $('#VajuanID').val(vajuanID);
     });
-    //ajak permohonan wp
+    //Ajax permohonan wp
     $(document).on('click', '#myPermohonanWP', function() {
         var vajuanID = $(this).attr("ajuanID");
          console.log(vajuanID);

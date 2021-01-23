@@ -96,7 +96,7 @@ class Pengajuan extends Controller
 			'ajuanNPWP'				=>	$this->request->getPost('npwp'),
 			'ajuanNOP'				=>	$this->request->getPost('nop'),
 			'ajuanKodeKPP'			=>	$this->request->getPost('kode_kpp'),
-			// ini maksudnya
+			// ini maksudnya ap
 			'ajuanJenisPemohonId'	=>  $this->request->getPost('id_jenispemohon'),
 			'ajuanJenisPemohon'		=>  $this->request->getPost('jenis_pemohon'),
 			'ajuanJnsPajakId'		=>  $this->request->getPost('id_jenispajak'),

@@ -37,7 +37,7 @@ class Pengajuansub extends Controller
     }
 
 
-    public function detail_pengajuansub($sub_id)
+    public function detail_pengajuansub($id)
     {
 
         $data['full_name'] = 'Mangapul';
@@ -45,20 +45,20 @@ class Pengajuansub extends Controller
         $data['icon'] = 'ion ion-ios-toggle';
         $data['title'] = 'Detail Pengajuan Sub';
 
-        $data['detail_pengajuansub'] = $this->pengajuansub->getPengajuansub($sub_id);
-        $data['objekdigugat'] = $this->pengajuansub->get_ObjekDigugat($sub_id);
-        $data['ketetapanpajaksub'] = $this->pengajuansub->get_KetetapanPajakSub($sub_id);
-        $data['responkanwil'] = $this->pengajuansub->get_ResponKanwil($sub_id);
+        $data['detail_pengajuansub'] = $this->pengajuansub->getPengajuansub($id);
+        $data['mobjekdigugat'] = $this->pengajuansub->get_ObjekDigugat($id);
+        $data['mketetapanpajaksub'] = $this->pengajuansub->get_KetetapanPajakSub($id);
+        $data['mresponkanwil'] = $this->pengajuansub->get_ResponKanwil($id);
 
-        $data['mjenispajak'] = $this->pengajuan->get_jenisPajak($sub_id);
+        // $data['mjenispajak'] = $this->pengajuan->get_jenisPajak($id);
 
         return view('pengajuansub/detail_pengajuansub', $data);
     }
 
     // public function jenis_pajak()
     // {
-    // 	$sub_id_jenispermohonan = service('request')->getPost('id');
-    // 	$data = $this->pengajuansub->get_jenisPajak($sub_id_jenispermohonan);
+    // 	$id_jenispermohonan = service('request')->getPost('id');
+    // 	$data = $this->pengajuansub->get_jenisPajak($id_jenispermohonan);
     // 	echo json_encode($data);
     // }
 
@@ -106,6 +106,7 @@ class Pengajuansub extends Controller
             'ajuanSUBalert1'            =>     $vAlert1,
             'ajuanSUBalert2'            =>     $vAlert2,
 
+            'ajuanSUBjenisPermintaanId' => $this->request->getPost('id_sub-stg'),
             'ajuanSUBjenisPermintaan'    =>  $this->request->getPost('sub-stg'),
             'ajuanSUBtglDiterima'        =>  $tgl_terimakanwil,
             'ajuanSUBNomorSengketa'        =>  $this->request->getPost('no_suratsengketa'),
@@ -117,6 +118,7 @@ class Pengajuansub extends Controller
             'ajuanSUBNPWP'                =>    $this->request->getPost('npwp'),
             'ajuanSUBNOP'                =>    $this->request->getPost('nop'),
             'ajuanSUBkodeKPP'            =>    $this->request->getPost('kode_kpp'),
+            'ajuanSUBjenisPajakId'      => $this->request->getPost('id_jenispajak'),
             'ajuanSUBjenisPajak'        =>    $this->request->getPost('jenispajak'),
             'ajuanSUBmasaPajak'            =>    $this->request->getPost('masa_pajak'),
             'ajuanSUBtahunPajak'        =>    $this->request->getPost('tahun_pajak'),
@@ -134,27 +136,58 @@ class Pengajuansub extends Controller
 
     public function saveObjekDigugat()
     {
-        $sub_id = $this->request->getPost('ajuanSUBID');
-        $tgl_objekgugat = $this->request->getPost('tgl_objekgugat');
-        $tgl_objekgugat = date("Y-m-d", strtotime($tgl_objekgugat));
+        $id = $this->request->getPost('ajuanSUBID');
+        $tgl_objekdigugat = $this->request->getPost('tgl_objekdigugat');
+        $tgl_objekdigugat = date("Y-m-d", strtotime($tgl_objekdigugat));
 
         $data = [
             'OBJGUGATajuanSUBID' => $this->request->getPost('ajuanSUBID'),
-            'OBJGUGATJenis' => $this->request->getPost('jenis_objekgugat'),
-            'OBJGUGATnoSurat' => $this->request->getPost('no_objekgugat'),
-            'OBJGUGATtglSurat' => $tgl_objekgugat,
-            'OBJGUGATnilaiPutusan' => $this->request->getPost('nilaiputusan_objekgugat')
+            'OBJGUGATJenis' => $this->request->getPost('jenis_objekdigugat'),
+            'OBJGUGATnoSurat' => $this->request->getPost('no_objekdigugat'),
+            'OBJGUGATtglSurat' => $tgl_objekdigugat,
+            'OBJGUGATnilaiPutusan' => $this->request->getPost('nilaiputusan_objekdigugat')
         ];
 
         $this->pengajuansub->saveObjekDigugat($data);
         session()->setFlashData('success', 'Objek Digugat berhasil di entri');
-        return redirect()->to(base_url('pengajuansub/detail_pengajuansub/' . $sub_id));
+        return redirect()->to(base_url('pengajuansub/detail_pengajuansub/' . $id));
     }
 
     public function saveKetetapanPajakSub()
     {
-        $sub_id = $this->request->getPost('ajuanSUBID');
-        
+        $id = $this->request->getPost('ajuanSUBID');
+        $tgl_ketetapan = $this->request->getPost('tgl_kp');
+        $tgl_ketetapan = date("Y-m-d", strtotime($tgl_ketetapan));
+
+        $data = [
+            'TETAPAJajuanSUBID' => $this->request->getPost('ajuanSUBID'),
+            'TETAPAJjenis' => $this->request->getPost('jenis_ketetapanPajak'),
+            'TETAPAJnomorKetetapan' => $this->request->getPost('no_kp'),
+            'TETAPAJtglKetetapan' => $tgl_ketetapan,
+            'TETAPAJNilaiKetetapan' => $this->request->getPost('nilai_kp')
+        ];
+
+        $this->pengajuansub->saveKetetapanPajakSub($data);
+        session()->setFlashData('success', 'Ketetapan Pajak Sub berhasil di entri');
+        return redirect()->to(base_url('pengajuansub/detail/pengajuansub/', $id));
+    }
+
+    public function saveResponKanwil()
+    {
+        $id = $this->request->getPost('ajuanSUBID');
+        $tgl_responkanwil = $this->request->getPost('tgl_responkanwil');
+        $tgl_responkanwil = date("Y-m-d", strtotime($tgl_responkanwil));
+
+        $data = [
+            'RESPajuanSUBID' => $this->request->getPost('ajuanSUBID'),
+            'RESPjenisTujuan' => $this->request->getPost('jenis_responkanwil'),
+            'RESPnoSurat' => $this->request->getPost('no_responkanwil'),
+            'RESPtglSurat' => $tgl_responkanwil
+        ];
+
+        $this->pengajuansub->saveResponKanwil($data);
+        session()->setFlashData('success', 'Respon Kanwil berhasil di entri');
+        return redirect()->to(base_url('pengajuansub/detail/pengajuansub/', $id));
     }
 
     //closing dilakukan jika dilakukan pencabutan ATAU keputusan sudah di entri
