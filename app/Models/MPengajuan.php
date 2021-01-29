@@ -33,6 +33,7 @@ class MPengajuan extends Model
 		return $builder->get();
 	}
 
+
 	public function get_jenisketetapanpajak()
 	{
 		$builder = $this->db->table('jenisketetapan');

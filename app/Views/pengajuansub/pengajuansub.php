@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $request = \Config\Services::request(); ?>
 <?= $this->extend('base') ?>
@@ -58,7 +58,6 @@ $request = \Config\Services::request(); ?>
                             <th>Detail</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         <?php
                         $no = 1;

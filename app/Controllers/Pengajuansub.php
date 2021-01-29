@@ -25,6 +25,7 @@ class Pengajuansub extends Controller
         $data['title'] = 'Pengajuan';
 
         $data['pengajuansub'] = $model->getPengajuansub()->getResult();
+        // $data['mketetapanpajaksub'] = $this->pengajuansub->get_jenisketetapanpajaksub()->getResult();
         $data['substg'] = $model->get_substg()->getResult();
         $data['jenispajak'] = $model->get_jenisPajak()->getResult();
 
@@ -36,7 +37,6 @@ class Pengajuansub extends Controller
         return view('pengajuansub/pengajuansub', $data);
     }
 
-
     public function detail_pengajuansub($id)
     {
 
@@ -46,8 +46,11 @@ class Pengajuansub extends Controller
         $data['title'] = 'Detail Pengajuan Sub';
 
         $data['detail_pengajuansub'] = $this->pengajuansub->getPengajuansub($id);
+        $data['jenis_kpsub'] = $this->pengajuansub->get_jenisketetapansub()->getResult();
+        $data['jenis_gugatan'] = $this->pengajuansub->get_jenisgugatan()->getResult();
         $data['mobjekdigugat'] = $this->pengajuansub->get_ObjekDigugat($id);
         $data['mketetapanpajaksub'] = $this->pengajuansub->get_KetetapanPajakSub($id);
+        $data['jenis_tujuanrespon'] = $this->pengajuansub->get_jenistujuanrespon()->getResult();
         $data['mresponkanwil'] = $this->pengajuansub->get_ResponKanwil($id);
 
         // $data['mjenispajak'] = $this->pengajuan->get_jenisPajak($id);
@@ -55,12 +58,6 @@ class Pengajuansub extends Controller
         return view('pengajuansub/detail_pengajuansub', $data);
     }
 
-    // public function jenis_pajak()
-    // {
-    // 	$id_jenispermohonan = service('request')->getPost('id');
-    // 	$data = $this->pengajuansub->get_jenisPajak($id_jenispermohonan);
-    // 	echo json_encode($data);
-    // }
 
     public function savePengajuanSub()
     {
@@ -141,13 +138,14 @@ class Pengajuansub extends Controller
         $tgl_objekdigugat = date("Y-m-d", strtotime($tgl_objekdigugat));
 
         $data = [
-            'OBJGUGATajuanSUBID' => $this->request->getPost('ajuanSUBID'),
-            'OBJGUGATJenis' => $this->request->getPost('jenis_objekdigugat'),
+            'OBJGUGATajuanSUBID' => $id,
+            'OBJGUGATJenis' => $this->request->getPost('jenis_gugatan'),
             'OBJGUGATnoSurat' => $this->request->getPost('no_objekdigugat'),
             'OBJGUGATtglSurat' => $tgl_objekdigugat,
             'OBJGUGATnilaiPutusan' => $this->request->getPost('nilaiputusan_objekdigugat')
         ];
-
+        print_r($data);
+        die();
         $this->pengajuansub->saveObjekDigugat($data);
         session()->setFlashData('success', 'Objek Digugat berhasil di entri');
         return redirect()->to(base_url('pengajuansub/detail_pengajuansub/' . $id));
@@ -156,20 +154,21 @@ class Pengajuansub extends Controller
     public function saveKetetapanPajakSub()
     {
         $id = $this->request->getPost('ajuanSUBID');
-        $tgl_ketetapan = $this->request->getPost('tgl_kp');
-        $tgl_ketetapan = date("Y-m-d", strtotime($tgl_ketetapan));
+        $tgl_kpsub = $this->request->getPost('tgl_kpsub');
+        $tgl_kpsub = date("Y-m-d", strtotime($tgl_kpsub));
 
         $data = [
             'TETAPAJajuanSUBID' => $this->request->getPost('ajuanSUBID'),
-            'TETAPAJjenis' => $this->request->getPost('jenis_ketetapanPajak'),
-            'TETAPAJnomorKetetapan' => $this->request->getPost('no_kp'),
-            'TETAPAJtglKetetapan' => $tgl_ketetapan,
-            'TETAPAJNilaiKetetapan' => $this->request->getPost('nilai_kp')
+            'TETAPAJid' => $this->request->getPost('jenis_kpsub'),
+            // 'TETAPAJjenis' => $this->request->getPost('jenis_kp'),
+            'TETAPAJnomorKetetapan' => $this->request->getPost('no_kpsub'),
+            'TETAPAJtglKetetapan' => $tgl_kpsub,
+            'TETAPAJNilaiKetetapan' => $this->request->getPost('nilai_kpsub')
         ];
 
         $this->pengajuansub->saveKetetapanPajakSub($data);
         session()->setFlashData('success', 'Ketetapan Pajak Sub berhasil di entri');
-        return redirect()->to(base_url('pengajuansub/detail/pengajuansub/', $id));
+        return redirect()->to(base_url('pengajuansub/detail_pengajuansub/', $id));
     }
 
     public function saveResponKanwil()
@@ -180,22 +179,33 @@ class Pengajuansub extends Controller
 
         $data = [
             'RESPajuanSUBID' => $this->request->getPost('ajuanSUBID'),
-            'RESPjenisTujuan' => $this->request->getPost('jenis_responkanwil'),
+            'RESPjenisTujuan' => $this->request->getPost('jenis_tujuanrespon'),
             'RESPnoSurat' => $this->request->getPost('no_responkanwil'),
             'RESPtglSurat' => $tgl_responkanwil
         ];
 
         $this->pengajuansub->saveResponKanwil($data);
         session()->setFlashData('success', 'Respon Kanwil berhasil di entri');
-        return redirect()->to(base_url('pengajuansub/detail/pengajuansub/', $id));
+        return redirect()->to(base_url('pengajuansub/detail_pengajuansub/', $id));
     }
 
     //closing dilakukan jika dilakukan pencabutan ATAU keputusan sudah di entri
 
+    public function closePengajuanSub() {
+        $id = $this->request->uri->getSegment(3);
+        $vPencabutan = $this->pengajuansub->checkPencabutan($id);
+        $vKeputusan = $this->pengajuansub->checkKeputusan($id);
 
-    public function update()
-    {
-        // Function update
+        if(($vPencabutan == 0) && ($vKeputusan == 0 )) {
+            session()->setFlashData('warning', 'Closing gagal! Silahkan melakukan Pencabutan atau Keputusan !');
+            return redirect()->to(base_url('pengajuansub/detail_pengajuansub/'. $id));
+        } else {
+            $data['ajuanStatusAkhir'] = 'TEPAT WAKTU';
+
+            $this->pengajuansub->closePengajuanSub($data, $id);
+            session()->setFlashData('success', 'Closing berhasil');
+			return redirect()->to(base_url('pengajuan/detail_pengajuansub/' . $id));
+        }
     }
 
     public function delete()

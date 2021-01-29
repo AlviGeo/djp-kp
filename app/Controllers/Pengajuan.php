@@ -64,7 +64,7 @@ class Pengajuan extends Controller
 		$data['mlaporanpenelitian'] = $this->pengajuan->get_LaporanPenelitian($id);
 		$data['mKeputusan'] = $this->pengajuan->get_Keputusan($id);
 
-		
+
 
 		//print_r($data);
 		return view('pengajuan/detail_pengajuan', $data);
@@ -96,7 +96,6 @@ class Pengajuan extends Controller
 			'ajuanNPWP'				=>	$this->request->getPost('npwp'),
 			'ajuanNOP'				=>	$this->request->getPost('nop'),
 			'ajuanKodeKPP'			=>	$this->request->getPost('kode_kpp'),
-			// ini maksudnya ap
 			'ajuanJenisPemohonId'	=>  $this->request->getPost('id_jenispemohon'),
 			'ajuanJenisPemohon'		=>  $this->request->getPost('jenis_pemohon'),
 			'ajuanJnsPajakId'		=>  $this->request->getPost('id_jenispajak'),
@@ -125,6 +124,7 @@ class Pengajuan extends Controller
 		$id = $this->request->getPost('ajuanID');
 		$tgl_kp = $this->request->getPost('tgl_kp');
 		$tgl_kp = date("Y-m-d", strtotime($tgl_kp));
+
 		$data = [
 			'KPajuanId'				=> $this->request->getPost('ajuanID'),
 			'KPJKid'				=> $this->request->getPost('jenis_kp'),
@@ -145,7 +145,7 @@ class Pengajuan extends Controller
 		$id = $this->request->getPost('ajuanID');
 		$tgl_suratWP = $this->request->getPost('tgl_suratwp');
 		$tgl_suratWP = date("Y-m-d", strtotime($tgl_suratWP));
-		
+
 		$tglLPAD = $this->request->getPost('tgl_lpad');
 		$tglLPAD = date("Y-m-d", strtotime($tglLPAD));
 
