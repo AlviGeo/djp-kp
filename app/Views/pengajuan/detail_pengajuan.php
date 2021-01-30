@@ -666,6 +666,7 @@
           </div>
         </div>
         <!-- ./Keputusan Keberatan -->
+        
         <!-- Modal Add ketetapan pajak-->
         <div class="modal fade" id="KetetapanPajak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">

@@ -452,7 +452,6 @@
                                 <label class="col-sm-2 col-form-label">Nilai</label>
                                 <div class="col-md-9"><input type="text" class="form-control" name="nilai_kp" placeholder="Nilai Ketetapan Pajak" required></div>
                             </div>
-                            <!-- End Ketetapan Pajak body -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Close</button>
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
