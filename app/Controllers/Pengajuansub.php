@@ -46,7 +46,7 @@ class Pengajuansub extends Controller
         $data['title'] = 'Detail Pengajuan Sub';
 
         $data['detail_pengajuansub'] = $this->pengajuansub->getPengajuansub($id);
-        $data['jenis_kpsub'] = $this->pengajuansub->get_jenisketetapansub()->getResult();
+        $data['jenis_kpsub'] = $this->pengajuansub->get_jenisketetapanpajaksub()->getResult();
         $data['jenis_gugatan'] = $this->pengajuansub->get_jenisgugatan()->getResult();
         $data['mobjekdigugat'] = $this->pengajuansub->get_ObjekDigugat($id);
         $data['mketetapanpajaksub'] = $this->pengajuansub->get_KetetapanPajakSub($id);
@@ -58,6 +58,12 @@ class Pengajuansub extends Controller
         return view('pengajuansub/detail_pengajuansub', $data);
     }
 
+    public function get_objekdigugat()
+    {
+        $id = $this->input->post('id');
+        $data = $this->MPengajuansub->get_objekdigugat($id);
+        echo json_encode($data);
+    }
 
     public function savePengajuanSub()
     {
@@ -98,29 +104,29 @@ class Pengajuansub extends Controller
 
         // Function save
         $data = [
-            'ajuanSUBnoSuratPermintaan'    =>    $this->request->getPost('no_suratsub'),
-            'ajuanSUBtglSuratPermintaan' => $tgl_suratsub,
-            'ajuanSUBalert1'            =>     $vAlert1,
-            'ajuanSUBalert2'            =>     $vAlert2,
+            'ajuanSUBnoSuratPermintaan'    => $this->request->getPost('no_suratsub'),
+            'ajuanSUBtglSuratPermintaan'   => $tgl_suratsub,
+            'ajuanSUBalert1'               => $vAlert1,
+            'ajuanSUBalert2'               => $vAlert2,
 
-            'ajuanSUBjenisPermintaanId' => $this->request->getPost('id_sub-stg'),
-            'ajuanSUBjenisPermintaan'    =>  $this->request->getPost('sub-stg'),
-            'ajuanSUBtglDiterima'        =>  $tgl_terimakanwil,
+            'ajuanSUBjenisPermintaanId'    => $this->request->getPost('id_sub-stg'),
+            'ajuanSUBjenisPermintaan'      =>  $this->request->getPost('sub-stg'),
+            'ajuanSUBtglDiterima'          =>  $tgl_terimakanwil,
             'ajuanSUBNomorSengketa'        =>  $this->request->getPost('no_suratsengketa'),
-            'ajuanSUBnoSuratBanding'    =>  $this->request->getPost('no_suratbanding'),
-            'ajuanSUBtglSuratBanding'    =>  $tgl_suratbanding,
+            'ajuanSUBnoSuratBanding'       =>  $this->request->getPost('no_suratbanding'),
+            'ajuanSUBtglSuratBanding'      =>  $tgl_suratbanding,
             'ajuanSUBtglDiterimaPP'        =>  $tgl_terimapp,
 
-            'ajuanSUBnamaWP'             =>     $this->request->getPost('nama_wp'),
-            'ajuanSUBNPWP'                =>    $this->request->getPost('npwp'),
-            'ajuanSUBNOP'                =>    $this->request->getPost('nop'),
-            'ajuanSUBkodeKPP'            =>    $this->request->getPost('kode_kpp'),
-            'ajuanSUBjenisPajakId'      => $this->request->getPost('id_jenispajak'),
-            'ajuanSUBjenisPajak'        =>    $this->request->getPost('jenispajak'),
+            'ajuanSUBnamaWP'               =>     $this->request->getPost('nama_wp'),
+            'ajuanSUBNPWP'                 =>    $this->request->getPost('npwp'),
+            'ajuanSUBNOP'                  =>    $this->request->getPost('nop'),
+            'ajuanSUBkodeKPP'              =>    $this->request->getPost('kode_kpp'),
+            'ajuanSUBjenisPajakId'         => $this->request->getPost('id_jenispajak'),
+            'ajuanSUBjenisPajak'           =>    $this->request->getPost('jenispajak'),
             'ajuanSUBmasaPajak'            =>    $this->request->getPost('masa_pajak'),
-            'ajuanSUBtahunPajak'        =>    $this->request->getPost('tahun_pajak'),
-            'ajuanSUBmataUang'            =>    $this->request->getPost('mata_uang'),
-            'ajuanStatusAkhir'            =>    "Open",
+            'ajuanSUBtahunPajak'           =>    $this->request->getPost('tahun_pajak'),
+            'ajuanSUBmataUang'             =>    $this->request->getPost('mata_uang'),
+            'ajuanStatusAkhir'             =>    "Open",
 
         ];
         // print_r($data);
@@ -134,6 +140,7 @@ class Pengajuansub extends Controller
     public function saveObjekDigugat()
     {
         $id = $this->request->getPost('ajuanSUBID');
+
         $tgl_objekdigugat = $this->request->getPost('tgl_objekdigugat');
         $tgl_objekdigugat = date("Y-m-d", strtotime($tgl_objekdigugat));
 
@@ -151,6 +158,7 @@ class Pengajuansub extends Controller
         return redirect()->to(base_url('pengajuansub/detail_pengajuansub/' . $id));
     }
 
+    // Join 
     public function saveKetetapanPajakSub()
     {
         $id = $this->request->getPost('ajuanSUBID');
@@ -158,17 +166,20 @@ class Pengajuansub extends Controller
         $tgl_kpsub = date("Y-m-d", strtotime($tgl_kpsub));
 
         $data = [
-            'TETAPAJajuanSUBID' => $this->request->getPost('ajuanSUBID'),
-            'TETAPAJid' => $this->request->getPost('jenis_kpsub'),
-            // 'TETAPAJjenis' => $this->request->getPost('jenis_kp'),
-            'TETAPAJnomorKetetapan' => $this->request->getPost('no_kpsub'),
-            'TETAPAJtglKetetapan' => $tgl_kpsub,
-            'TETAPAJNilaiKetetapan' => $this->request->getPost('nilai_kpsub')
+            'TETAPAJajuanSUBID'                => $this->request->getPost('ajuanSUBID'),
+            'TETAPAJid'                        => $this->request->getPost('jenis_kpsub'),
+            'TETAPAJnomorKetetapan'            => $this->request->getPost('no_kpsub'),
+            'TETAPAJtglKetetapan'              => $tgl_kpsub,
+            'TETAPAJNilaiKetetapan'            => $this->request->getPost('nilai_kpsub'),
         ];
 
+
+
         $this->pengajuansub->saveKetetapanPajakSub($data);
+        print_r($data);
+        die();
         session()->setFlashData('success', 'Ketetapan Pajak Sub berhasil di entri');
-        return redirect()->to(base_url('pengajuansub/detail_pengajuansub/', $id));
+        // return redirect()->to(base_url('pengajuansub/detail_pengajuansub/' . $id));
     }
 
     public function saveResponKanwil()
@@ -178,10 +189,10 @@ class Pengajuansub extends Controller
         $tgl_responkanwil = date("Y-m-d", strtotime($tgl_responkanwil));
 
         $data = [
-            'RESPajuanSUBID' => $this->request->getPost('ajuanSUBID'),
-            'RESPjenisTujuan' => $this->request->getPost('jenis_tujuanrespon'),
-            'RESPnoSurat' => $this->request->getPost('no_responkanwil'),
-            'RESPtglSurat' => $tgl_responkanwil
+            'RESPajuanSUBID'    => $this->request->getPost('ajuanSUBID'),
+            'RESPjenisTujuan'   => $this->request->getPost('jenis_tujuanrespon'),
+            'RESPnoSurat'       => $this->request->getPost('no_responkanwil'),
+            'RESPtglSurat'      => $tgl_responkanwil
         ];
 
         $this->pengajuansub->saveResponKanwil($data);
@@ -191,20 +202,21 @@ class Pengajuansub extends Controller
 
     //closing dilakukan jika dilakukan pencabutan ATAU keputusan sudah di entri
 
-    public function closePengajuanSub() {
-        $id = $this->request->uri->getSegment(3);
+    public function closePengajuanSub()
+    {
+        $id          = $this->request->uri->getSegment(3);
         $vPencabutan = $this->pengajuansub->checkPencabutan($id);
-        $vKeputusan = $this->pengajuansub->checkKeputusan($id);
+        $vKeputusan  = $this->pengajuansub->checkKeputusan($id);
 
-        if(($vPencabutan == 0) && ($vKeputusan == 0 )) {
+        if (($vPencabutan == 0) && ($vKeputusan == 0)) {
             session()->setFlashData('warning', 'Closing gagal! Silahkan melakukan Pencabutan atau Keputusan !');
-            return redirect()->to(base_url('pengajuansub/detail_pengajuansub/'. $id));
+            return redirect()->to(base_url('pengajuansub/detail_pengajuansub/' . $id));
         } else {
             $data['ajuanStatusAkhir'] = 'TEPAT WAKTU';
 
             $this->pengajuansub->closePengajuanSub($data, $id);
             session()->setFlashData('success', 'Closing berhasil');
-			return redirect()->to(base_url('pengajuan/detail_pengajuansub/' . $id));
+            return redirect()->to(base_url('pengajuan/detail_pengajuansub/' . $id));
         }
     }
 

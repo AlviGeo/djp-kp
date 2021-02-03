@@ -1,4 +1,4 @@
-<?php $request = \Config\Services::request(); ?>
+F<?php $request = \Config\Services::request(); ?>
 <?= $this->extend('base') ?>
 
 <?= $this->section('content') ?>
@@ -201,12 +201,9 @@
                         <i class="fas fa-cog"></i> Manage
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                        <a data-target="#mObjekDigugat" data-toggle="modal" class="dropdown-item" id="myObjekDigugat" href="#myObjekDigugat" ajuanSUBID='<?= $detail_pengajuansub['ajuanSUBID'] ?>'> <i class="fas fa-chevron-circle-right"></i>Objek Digugat</a>
-
-                        <a data-target="#mKetetapanPajak" data-toggle="modal" class="dropdown-item" id="myKetetapanPajak" href="#myPermohonanWP" ajuanSUBID='<?= $detail_pengajuansub['ajuanSUBID'] ?>'> <i class="fas fa-chevron-circle-right"></i>Ketetapan Pajak</a>
-
-                        <a data-target="#mResponKanwil" data-toggle="modal" class="dropdown-item" id="myResponKanwil" href="#myResponKanwil" ajuanSUBID='<?= $detail_pengajuansub['ajuanSUBID'] ?>'> <i class="fas fa-chevron-circle-right"></i>Respon Kantor Wilayah</a>
+                        <a data-target="#mObjekDigugat" data-toggle="modal" class="dropdown-item" id="idObjekDigugat" href="#myObjekDigugat" ajuanSubid='<?= $detail_pengajuansub['ajuanSUBID'] ?>'> <i class="fas fa-chevron-circle-right"></i>Objek Digugat</a>
+                        <a data-target="#KetetapanPajak" data-toggle="modal" class="dropdown-item" id="idKetetapanPajak" href="#myKetetapanPajak" ajuanSubid='<?= $detail_pengajuansub['ajuanSUBID'] ?>'> <i class="fas fa-chevron-circle-right"></i> Ketetapan Pajak</a>
+                        <a data-target="#mResponKanwil" data-toggle="modal" class="dropdown-item" id="idResponKanwil" href="#myResponKanwil" ajuanSubid='<?= $detail_pengajuansub['ajuanSUBID'] ?>'> <i class="fas fa-chevron-circle-right"></i>Respon Kantor Wilayah</a>
                     </div>
 
                     <!-- </div> -->
@@ -244,10 +241,10 @@
                             foreach ($mobjekdigugat as $row) { ?>
                                 <tr>
                                     <td><?= $no++; ?></td>
-                                    <td><?= $row['OBJGUGATJenis']; ?></td>
-                                    <td><?= $row['OBJGUGATnoSurat']; ?></td>
-                                    <td><?= $row['OBJGUGATtglSurat']; ?></td>
-                                    <td><?= $row['OBJGUGATnilaiPutusan']; ?></td>
+                                    <td><?= $row->OBJGUGATJenis; ?></td>
+                                    <td><?= $row->OBJGUGATnoSurat; ?></td>
+                                    <td><?= $row->OBJGUGATtglSurat; ?></td>
+                                    <td><?= $row->OBJGUGATnilaiPutusan; ?></td>
                                 </tr>
                             <?php } ?>
                         </tbody>
@@ -283,7 +280,6 @@
                                 <th>Nilai Ketetapan</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <?php
                             $no = 1;
@@ -364,14 +360,14 @@
                     </div>
                     <form action="<?php echo base_url() ?>/pengajuansub/saveObjekDigugat" method="post">
                         <div class="modal-body">
-                            <input type="hidden" name="ajuanSUBID" id="VajuanSUBID">
+                            <input type="hidden" name="ajuanSUBID" id="objekDigugat">
                             <div class="form-group-row">
                                 <label class="col-sm-2 col-form-label">Jenis</label>
                                 <div class="col-md-9">
                                     <select class="form-control" name="jenis_gugatan" id="jenisgugatan" required>
-                                        <option value="">No Selected</option>
+                                        <option value="0">No Selected</option>
                                         <?php foreach ($jenis_gugatan as $row) { ?>
-                                            <option value=<?= $row->GUGATid; ?>> <?= $row->GUGATjenis; ?></option>
+                                            <option value="<?= $row->GUGATid; ?>"> <?= $row->GUGATjenis; ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -395,7 +391,6 @@
                                 <label class="col-sm-2 col-form-label">Nilai Putusan</label>
                                 <div class="col-md-9"><input type="text" class="form-control" name="nilaiputusan_objekdigugat" placeholder="Nilai Objek Digugat" required></div>
                             </div>
-                            <!-- End Ketetapan Pajak -->
                         </div>
 
                         <div class="modal-footer">
@@ -407,8 +402,8 @@
             </div>
         </div>
 
-        <!-- Modal Add Ketetapan Pajak -->
-        <div class="modal fade" id="mKetetapanPajak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Modal Add ketetapan pajak-->
+        <div class="modal fade" id="KetetapanPajak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -420,28 +415,28 @@
                     <form action="<?php echo base_url() ?>/pengajuansub/saveKetetapanPajakSub" method="post">
                         <div class="modal-body">
                             <!-- Ketetapan Pajak -->
-                            <input type="hidden" name="ajuanSUBID" id="KPajuanSUBID">
+                            <input type="hidden" name="ajuanSUBID" id="ketetapanPajakSub">
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Jenis</label>
                                 <div class="col-md-9">
-                                    <select class="form-control" name="jenis_kpsub" id="jenis_kpsub" required>
-                                        <option value="" selected>No Seletected</option>
+                                    <select class="form-control" name="jenis_kpsub" id="JENISKPSUB" required>
+                                        <option value="">No Seletected</option>
                                         <?php foreach ($jenis_kpsub as $row) { ?>
-                                            <option value=<?= $row->TETAPAJENISid; ?>l_jeniskpsub="<?= $row->TETAPAJENISid ?>"> <?= $row->TETAPAJENISnama ?></option>
+                                            <option value=<?= $row->TETAPAJENISid ?>> <?= $row->TETAPAJENISnama ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
                             </div>
                             <!-- $pengajuan as $key => $data -->
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">No</label>
-                                <div class="col-md-9"><input type="text" class="form-control" name="no_kp" placeholder="No Ketetapan Pajak" required></div>
+                                <label class="col-sm-2 col-form-label">No Ketetapan</label>
+                                <div class="col-md-9"><input type="text" class="form-control" name="no_kpsub" placeholder="No Ketetapan Pajak" required></div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Tanggal</label>
                                 <div class="col-md-9">
                                     <div class="input-group date" id="reservationdate1" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="tgl_kp" name="tgl_kp" value="<?= date('m/d/Y', time()); ?>" required />
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="tgl_kpsub" name="tgl_kpsub" value="<?= date('m/d/Y', time()); ?>" required />
                                         <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
@@ -450,88 +445,90 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Nilai</label>
-                                <div class="col-md-9"><input type="text" class="form-control" name="nilai_kp" placeholder="Nilai Ketetapan Pajak" required></div>
+                                <div class="col-md-9"><input type="text" class="form-control" name="nilai_kpsub" placeholder="Nilai Ketetapan Pajak" required></div>
                             </div>
+                            <!-- End Ketetapan Pajak body -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Close</button>
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save </button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Modal Add Respon Kanwil -->
-        <div class="modal fade" id="mResponKanwil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Manage Respon Kanwil (PK)</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="<?php echo base_url() ?>/pengajuansub/saveResponKanwil" method="post">
-                        <div class="modal-body">
-                            <!-- Ketetapan Pajak -->
-                            <input type="hidden" name="ajuanSUBID" id="RKajuanSUBID">
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Jenis</label>
-                                <div class="col-md-9">
-                                    <select class="form-control" name="jenis_tujuanrespon" id="jenis_tujuanrespon" required>
-                                        <option value="">No Seletected</option>
-                                        <?php foreach ($jenis_tujuanrespon as $row) { ?>
-                                            <option value="<?= $row->RESPTUJid; ?>" l_jenisresponkanwil="<?= $row->RESPTUJid ?>"><?= $row->RESPTUnama; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
+    <!-- Modal Add Respon Kanwil -->
+    <div class="modal fade" id="mResponKanwil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Manage Respon Kanwil (PK)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="<?php echo base_url() ?>/pengajuansub/saveResponKanwil" method="post">
+                    <div class="modal-body">
+                        <!-- Ketetapan Pajak -->
+                        <input type="hidden" name="ajuanSUBID" id="responKanwil">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Jenis</label>
+                            <div class="col-md-9">
+                                <select class="form-control" name="jenis_tujuanrespon" id="jenis_tujuanrespon" required>
+                                    <option value="">No Seletected</option>
+                                    <?php foreach ($jenis_tujuanrespon as $row) { ?>
+                                        <option value="<?= $row->RESPTUJid; ?>" l_jenisresponkanwil="<?= $row->RESPTUJid ?>"><?= $row->RESPTUnama; ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
-                            <!-- $pengajuan as $key => $data -->
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">No</label>
-                                <div class="col-md-9"><input type="text" class="form-control" name="no_responkanwil" placeholder="No Ketetapan Pajak" required></div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Tanggal</label>
-                                <div class="col-md-9">
-                                    <div class="input-group date" id="reservationdate2" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="tgl_responkanwil" name="tgl_responkanwil" value="<?= date('m/d/Y', time()); ?>" required />
-                                        <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
+                        </div>
+                        <!-- $pengajuan as $key => $data -->
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">No</label>
+                            <div class="col-md-9"><input type="text" class="form-control" name="no_responkanwil" placeholder="No Ketetapan Pajak" required></div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Tanggal</label>
+                            <div class="col-md-9">
+                                <div class="input-group date" id="reservationdate2" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="tgl_responkanwil" name="tgl_responkanwil" value="<?= date('m/d/Y', time()); ?>" required />
+                                    <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- End Ketetapan Pajak body -->
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Close</button>
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
-                            </div>
                         </div>
-                    </form>
-                </div>
+                        <!-- End Ketetapan Pajak body -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+                        </div>
+                    </div>
+                </form>
             </div>
+        </div>
 
 </section>
 </div>
 <script>
     $(document).ready(function() {
-        $('#datetimepicker').datetimepicker({
-            format: 'YYYY-MM-DD',
-        });
-        $('#myTableObjekDigugat').DataTable({
-            "scrollX": false,
-            "searching": true,
-        });
-        $('#myTableKetetapanPajakSub').DataTable({
-            "scrollX": false,
-            "searching": true,
-        });
-        $('#myTableResponKanwil').DataTable({
-            "scrollX": false,
-            "searching": true,
-        });
+            $('#datetimepicker').datetimepicker({
+                format: 'YYYY-MM-DD',
+            });
+            $('#myTableObjekDigugat').DataTable({
+                "scrollX": false,
+                "searching": true,
+            });
+            $('#myTableKetetapanPajakSub').DataTable({
+                "scrollX": false,
+                "searching": true,
+            });
+            $('#myTableResponKanwil').DataTable({
+                "scrollX": false,
+                "searching": true,
+            });
 
         // Ajax Objek Digugat
 
@@ -542,26 +539,47 @@
         //     })
         // })
 
-        $(document).on('click', '#myObjekDigugat', function() {
-            var vajuanSUBID = $(this).attr('jenisgugatan'); // id dari select
-            console.log(vajuanSUBID);
-            $('#VajuanSUBID').val(vajuanSUBID); // id dari input type
+        // Ajax 
+
+        // $('#jenisgugatan').change(function() {
+        //     var id = $(this).val();
+        //     $.ajax({
+        //         url: "index.php/pengajuansub/get_objekdigugat",
+        //         method: "POST",
+        //         data: {
+        //             id: id
+        //         },
+        //         async: false,
+        //         dataType: 'json',
+        //         success: function(data) {
+        //             var html = '';
+        //             var i;
+        //             for(i=0; i < data.length; i++) {
+        //                 html += '<option>' + data[i].GUGATid + '</option>';
+        //             }
+        //             $('.subkategori').html(html);
+        //         }
+        //     })
+        // },
+
+        // Ajax Objek Digugat
+        $(document).on('click', '#idObjekDigugat', function() {
+            var vajuanSUBID = $(this).attr("ajuanSubid");
+            $('#objekDigugat').val(vajuanSUBID);
         });
 
         // Ajax Ketetapan Pajak
-        $(document).on('click', '#myKetetapanPajakSub', function() {
-            var vajuanSUBID = $(this).find("option:selected").attr('l_jeniskpsub');
-            console.log(vajuanSUBID);
-            $('#KPajuanSUBID').val(vajuanSUBID);
+        $(document).on('click', '#idKetetapanPajak', function() {
+            var vajuanSUBID = $(this).attr("ajuanSubid");
+            $('#ketetapanPajakSub').val(vajuanSUBID);
         });
 
         // Ajax Respon Kanwil
-        $(document).on('click', '#myResponKanwil', function() {
-            var vajuanSUBID = $(this).find("option:selected").attr('l_jenisresponkanwil');
-            console.log(vajuanSUBID);
-            $('#RKajuanSUBID').val(vajuanSUBID);
+        $(document).on('click', '#idResponKanwil', function() {
+            var vajuanSUBID = $(this).attr("ajuanSubid");
+            
+            $('#responKanwil').val(vajuanSUBID);
         });
-
     });
 
     // Ajax ketetapan pajak

@@ -133,8 +133,8 @@ class Pengajuan extends Controller
 			'KPNilai'				=> $this->request->getPost('nilai_kp'),
 		];
 
-		//print_r($data);
-		//die();
+		print_r($data);
+		die();
 		$this->pengajuan->saveKetetapanPajak($data);
 		session()->setFlashData('success', 'Ketetapan Pajak berhasil di entri');
 		return redirect()->to(base_url('pengajuan/detail_pengajuan/' . $id));

@@ -201,8 +201,8 @@
 
             <a data-target="#mPembuktianWP" data-toggle="modal" class="dropdown-item" id="myPembuktianWP" href="#myPembuktianWP" ajuanID='<?= $detail_pengajuan['ajuanId'] ?>'><i class="fas fa-chevron-circle-right"></i> Pembuktian ke WP</a>
 
-            <a data-target="#mSPUH" data-toggle="modal" class="dropdown-item" id="mySPUH" href="#mySPUH" ajuanID='<?= $detail_pengajuan['ajuanId'] ?>'><i class="fas fa-chevron-circle-right"></i> SPUH - Pembahasan Akhir</a>
-
+`            <a data-target="#mSPUH" data-toggle="modal" class="dropdown-item" id="mySPUH" href="#mySPUH" ajuanID='<?= $detail_pengajuan['ajuanId'] ?>'><i class="fas fa-chevron-circle-right"></i> SPUH - Pembahasan Akhir</a>
+`
             <a data-target="#mLaporanPenelitian" data-toggle="modal" class="dropdown-item" id="myLaporanPenelitian" href="#myLaporanPenelitian" ajuanID='<?= $detail_pengajuan['ajuanId'] ?>'><i class="fas fa-chevron-circle-right"></i> Laporan Penelitian</a>
 
             <a data-target="#mKeputusan" data-toggle="modal" class="dropdown-item" id="myKeputusan" href="#myKeputusan" ajuanID='<?= $detail_pengajuan['ajuanId'] ?>'><i class="fas fa-chevron-circle-right"></i> Kuputusan Keberatan / Non Kebaratan</a>
@@ -666,7 +666,7 @@
           </div>
         </div>
         <!-- ./Keputusan Keberatan -->
-        
+
         <!-- Modal Add ketetapan pajak-->
         <div class="modal fade" id="KetetapanPajak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -1289,6 +1289,7 @@
     // Ajax ketetapan pajak 
     $(document).on('click', '#myKetetapanPajak', function() {
       var vajuanID = $(this).attr("ajuanID");
+      console.log("succeess")
       $('#VajuanID').val(vajuanID);
     });
     //Ajax permohonan wp

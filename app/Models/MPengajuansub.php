@@ -34,10 +34,8 @@ class MPengajuansub extends Model
 	// Objek Digugat
 	public function get_objekdigugat($id = false)
 	{
-		return $this->db->table('objekdigugat')
-			->where('OBJGUGATid', $id)
-			->get()
-			->getResultArray();
+		$builder = $this->db->query("SELECT * FROM objekdigugat");
+		return $builder;
 	}
 
 	public function get_substg()
@@ -67,7 +65,7 @@ class MPengajuansub extends Model
 	}
 
 	// Dropdown Jenis Pajak Sub dari Ketetapan Pajak Sub
-	public function get_jenisketetapansub()
+	public function get_jenisketetapanpajaksub()
 	{
 		$builder = $this->db->table('jenisketetapansub');
 		return $builder->get();
@@ -86,22 +84,6 @@ class MPengajuansub extends Model
 		$builder = $this->db->query("SELECT jenistujuanrespon.RESPTUnama,responkanwil.RESPnoSurat, responkanwil.RESPtglSurat, FROM jenistujuanrespon left JOIN responkanwil ON jenistujuanrespon.RESPTUJid = responkanwil.RESPid WHERE responkanwil.RESPajuanSUBID = $id");
 		return $builder->getResultArray();
 	}
-
-	// public function get_substg()
-	// {
-
-	// 	$builder = $this->db->query("SELECT * FROM substg WHERE SUBSTGnama NOT LIKE '%SURAT%'");
-	// 	return $builder->getResultArray();
-	// }
-
-	// public function get_jenispajak()
-	// {
-
-	// 	$builder = $this->db->query("SELECT * FROM jenispajak WHERE NamajenisPajak NOT LIKE '%SURAT%'");
-	// 	return $builder->getResultArray();
-	// }
-
-
 
 	public function savePengajuansub($data)
 	{
