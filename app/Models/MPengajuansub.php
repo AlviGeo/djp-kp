@@ -32,10 +32,10 @@ class MPengajuansub extends Model
 	}
 
 	// Objek Digugat
-	public function get_objekdigugat($id = false)
+	public function get_Objekdigugat($id = false)
 	{
 		$builder = $this->db->query("SELECT * FROM objekdigugat");
-		return $builder;
+		return $builder->getResultArray();
 	}
 
 	public function get_substg()
@@ -60,7 +60,7 @@ class MPengajuansub extends Model
 	// Ketetapan Pajak Sub
 	public function get_KetetapanPajakSub($id = false)
 	{
-		$builder = $this->db->query("SELECT jenisketetapansub.TETAPAJENISnama,ketetapanpajaksub.TETAPAJnomorKetetapan, ketetapanpajaksub.TETAPAJtglKetetapan, ketetapanpajaksub.TETAPAJNilaiKetetapan FROM jenisketetapansub left JOIN ketetapanpajaksub ON jenisketetapansub.TETAPAJENISid = ketetapanpajaksub.TETAPAJid WHERE ketetapanpajaksub.TETAPAJajuanSUBID = $id");
+		$builder = $this->db->query("SELECT jenisketetapansub.TETAPAJENISnama, ketetapanpajaksub.TETAPAJnomorKetetapan, ketetapanpajaksub.TETAPAJtglKetetapan, ketetapanpajaksub.TETAPAJNilaiKetetapan FROM jenisketetapansub left JOIN ketetapanpajaksub ON jenisketetapansub.TETAPAJENISid = ketetapanpajaksub.TETAPAJid WHERE ketetapanpajaksub.TETAPAJajuanSUBID = $id");
 		return $builder->getResultArray();
 	}
 

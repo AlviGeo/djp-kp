@@ -48,9 +48,9 @@ class Pengajuansub extends Controller
         $data['detail_pengajuansub'] = $this->pengajuansub->getPengajuansub($id);
         $data['jenis_kpsub'] = $this->pengajuansub->get_jenisketetapanpajaksub()->getResult();
         $data['jenis_gugatan'] = $this->pengajuansub->get_jenisgugatan()->getResult();
+        $data['jenis_tujuanrespon'] = $this->pengajuansub->get_jenistujuanrespon()->getResult();
         $data['mobjekdigugat'] = $this->pengajuansub->get_ObjekDigugat($id);
         $data['mketetapanpajaksub'] = $this->pengajuansub->get_KetetapanPajakSub($id);
-        $data['jenis_tujuanrespon'] = $this->pengajuansub->get_jenistujuanrespon()->getResult();
         $data['mresponkanwil'] = $this->pengajuansub->get_ResponKanwil($id);
 
         // $data['mjenispajak'] = $this->pengajuan->get_jenisPajak($id);
@@ -145,15 +145,15 @@ class Pengajuansub extends Controller
         $tgl_objekdigugat = date("Y-m-d", strtotime($tgl_objekdigugat));
 
         $data = [
-            'OBJGUGATajuanSUBID' => $id,
-            'OBJGUGATJenis' => $this->request->getPost('jenis_gugatan'),
-            'OBJGUGATnoSurat' => $this->request->getPost('no_objekdigugat'),
-            'OBJGUGATtglSurat' => $tgl_objekdigugat,
-            'OBJGUGATnilaiPutusan' => $this->request->getPost('nilaiputusan_objekdigugat')
+            'OBJGUGATajuanSUBID'    => $id,
+            'OBJGUGATJenis'         => $this->request->getPost('jenis_gugatan'),
+            'OBJGUGATnoSurat'       => $this->request->getPost('no_objekdigugat'),
+            'OBJGUGATtglSurat'      => $tgl_objekdigugat,
+            'OBJGUGATnilaiPutusan'  => $this->request->getPost('nilaiputusan_objekdigugat')
         ];
-        print_r($data);
-        die();
+        
         $this->pengajuansub->saveObjekDigugat($data);
+        
         session()->setFlashData('success', 'Objek Digugat berhasil di entri');
         return redirect()->to(base_url('pengajuansub/detail_pengajuansub/' . $id));
     }
@@ -162,40 +162,39 @@ class Pengajuansub extends Controller
     public function saveKetetapanPajakSub()
     {
         $id = $this->request->getPost('ajuanSUBID');
+
         $tgl_kpsub = $this->request->getPost('tgl_kpsub');
         $tgl_kpsub = date("Y-m-d", strtotime($tgl_kpsub));
 
         $data = [
-            'TETAPAJajuanSUBID'                => $this->request->getPost('ajuanSUBID'),
-            'TETAPAJid'                        => $this->request->getPost('jenis_kpsub'),
-            'TETAPAJnomorKetetapan'            => $this->request->getPost('no_kpsub'),
-            'TETAPAJtglKetetapan'              => $tgl_kpsub,
-            'TETAPAJNilaiKetetapan'            => $this->request->getPost('nilai_kpsub'),
+            'TETAPAJajuanSUBID'        => $id,
+            'TETAPAJjenis'             => $this->request->getPost('jenis_kpsub'),
+            'TETAPAJnomorKetetapan'    => $this->request->getPost('no_kpsub'),
+            'TETAPAJtglKetetapan'      => $tgl_kpsub,
+            'TETAPAJNilaiKetetapan'    => $this->request->getPost('nilai_kpsub'),
         ];
 
-
-
         $this->pengajuansub->saveKetetapanPajakSub($data);
-        print_r($data);
-        die();
         session()->setFlashData('success', 'Ketetapan Pajak Sub berhasil di entri');
-        // return redirect()->to(base_url('pengajuansub/detail_pengajuansub/' . $id));
+        return redirect()->to(base_url('pengajuansub/detail_pengajuansub/' . $id));
     }
 
     public function saveResponKanwil()
     {
         $id = $this->request->getPost('ajuanSUBID');
+
         $tgl_responkanwil = $this->request->getPost('tgl_responkanwil');
         $tgl_responkanwil = date("Y-m-d", strtotime($tgl_responkanwil));
 
         $data = [
-            'RESPajuanSUBID'    => $this->request->getPost('ajuanSUBID'),
+            'RESPajuanSUBID'    => $id,
             'RESPjenisTujuan'   => $this->request->getPost('jenis_tujuanrespon'),
             'RESPnoSurat'       => $this->request->getPost('no_responkanwil'),
-            'RESPtglSurat'      => $tgl_responkanwil
+            'RESPtglSurat'      => $tgl_responkanwil,
         ];
 
         $this->pengajuansub->saveResponKanwil($data);
+        
         session()->setFlashData('success', 'Respon Kanwil berhasil di entri');
         return redirect()->to(base_url('pengajuansub/detail_pengajuansub/', $id));
     }

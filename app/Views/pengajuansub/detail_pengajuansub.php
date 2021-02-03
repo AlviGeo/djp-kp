@@ -202,7 +202,7 @@ F<?php $request = \Config\Services::request(); ?>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a data-target="#mObjekDigugat" data-toggle="modal" class="dropdown-item" id="idObjekDigugat" href="#myObjekDigugat" ajuanSubid='<?= $detail_pengajuansub['ajuanSUBID'] ?>'> <i class="fas fa-chevron-circle-right"></i>Objek Digugat</a>
-                        <a data-target="#KetetapanPajak" data-toggle="modal" class="dropdown-item" id="idKetetapanPajak" href="#myKetetapanPajak" ajuanSubid='<?= $detail_pengajuansub['ajuanSUBID'] ?>'> <i class="fas fa-chevron-circle-right"></i> Ketetapan Pajak</a>
+                        <a data-target="#mKetetapanPajak" data-toggle="modal" class="dropdown-item" id="idKetetapanPajak" href="#myKetetapanPajak" ajuanSubid='<?= $detail_pengajuansub['ajuanSUBID'] ?>'> <i class="fas fa-chevron-circle-right"></i> Ketetapan Pajak</a>
                         <a data-target="#mResponKanwil" data-toggle="modal" class="dropdown-item" id="idResponKanwil" href="#myResponKanwil" ajuanSubid='<?= $detail_pengajuansub['ajuanSUBID'] ?>'> <i class="fas fa-chevron-circle-right"></i>Respon Kantor Wilayah</a>
                     </div>
 
@@ -241,10 +241,10 @@ F<?php $request = \Config\Services::request(); ?>
                             foreach ($mobjekdigugat as $row) { ?>
                                 <tr>
                                     <td><?= $no++; ?></td>
-                                    <td><?= $row->OBJGUGATJenis; ?></td>
-                                    <td><?= $row->OBJGUGATnoSurat; ?></td>
-                                    <td><?= $row->OBJGUGATtglSurat; ?></td>
-                                    <td><?= $row->OBJGUGATnilaiPutusan; ?></td>
+                                    <td><?= $row['OBJGUGATJenis'] ?></td>
+                                    <td><?= $row['OBJGUGATnoSurat'] ?></td>
+                                    <td><?= $row['OBJGUGATtglSurat'] ?></td>
+                                    <td><?= $row['OBJGUGATnilaiPutusan'] ?></td>
                                 </tr>
                             <?php } ?>
                         </tbody>
@@ -379,9 +379,9 @@ F<?php $request = \Config\Services::request(); ?>
                             <div class="form-group-row">
                                 <label class="col-sm-2 col-form-label">Tanggal</label>
                                 <div class="col-md-9">
-                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="tgl_objekdigugat" name="tgl_objekdigugat" value="<?= date('m/d/Y', time()); ?>" required />
-                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                    <div class="input-group date" id="reservationdate1" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate1" id="tgl_objekdigugat" name="tgl_objekdigugat" value="<?= date('m/d/Y', time()); ?>" required />
+                                        <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
@@ -403,7 +403,7 @@ F<?php $request = \Config\Services::request(); ?>
         </div>
 
         <!-- Modal Add ketetapan pajak-->
-        <div class="modal fade" id="KetetapanPajak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="mKetetapanPajak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -430,14 +430,14 @@ F<?php $request = \Config\Services::request(); ?>
                             <!-- $pengajuan as $key => $data -->
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">No Ketetapan</label>
-                                <div class="col-md-9"><input type="text" class="form-control" name="no_kpsub" placeholder="No Ketetapan Pajak" required></div>
+                                <div class="col-md-9"><input type="number" class="form-control" name="no_kpsub" placeholder="No Ketetapan Pajak" required></div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Tanggal</label>
                                 <div class="col-md-9">
-                                    <div class="input-group date" id="reservationdate1" data-target-input="nearest">
+                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="tgl_kpsub" name="tgl_kpsub" value="<?= date('m/d/Y', time()); ?>" required />
-                                        <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
+                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
@@ -445,7 +445,7 @@ F<?php $request = \Config\Services::request(); ?>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Nilai</label>
-                                <div class="col-md-9"><input type="text" class="form-control" name="nilai_kpsub" placeholder="Nilai Ketetapan Pajak" required></div>
+                                <div class="col-md-9"><input type="number" class="form-control" name="nilai_kpsub" placeholder="Nilai Ketetapan Pajak" required></div>
                             </div>
                             <!-- End Ketetapan Pajak body -->
                             <div class="modal-footer">
@@ -479,7 +479,7 @@ F<?php $request = \Config\Services::request(); ?>
                                 <select class="form-control" name="jenis_tujuanrespon" id="jenis_tujuanrespon" required>
                                     <option value="">No Seletected</option>
                                     <?php foreach ($jenis_tujuanrespon as $row) { ?>
-                                        <option value="<?= $row->RESPTUJid; ?>" l_jenisresponkanwil="<?= $row->RESPTUJid ?>"><?= $row->RESPTUnama; ?></option>
+                                        <option value="<?= $row->RESPTUJid; ?>"><?= $row->RESPTUnama; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -487,13 +487,13 @@ F<?php $request = \Config\Services::request(); ?>
                         <!-- $pengajuan as $key => $data -->
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">No</label>
-                            <div class="col-md-9"><input type="text" class="form-control" name="no_responkanwil" placeholder="No Ketetapan Pajak" required></div>
+                            <div class="col-md-9"><input type="number" class="form-control" name="no_responkanwil" placeholder="No Ketetapan Pajak" required></div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tanggal</label>
                             <div class="col-md-9">
                                 <div class="input-group date" id="reservationdate2" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" id="tgl_responkanwil" name="tgl_responkanwil" value="<?= date('m/d/Y', time()); ?>" required />
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate2" id="tgl_responkanwil" name="tgl_responkanwil" value="<?= date('m/d/Y', time()); ?>" required />
                                     <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
@@ -538,29 +538,6 @@ F<?php $request = \Config\Services::request(); ?>
         //         $("#txtresults").val(varjuanSUBID);
         //     })
         // })
-
-        // Ajax 
-
-        // $('#jenisgugatan').change(function() {
-        //     var id = $(this).val();
-        //     $.ajax({
-        //         url: "index.php/pengajuansub/get_objekdigugat",
-        //         method: "POST",
-        //         data: {
-        //             id: id
-        //         },
-        //         async: false,
-        //         dataType: 'json',
-        //         success: function(data) {
-        //             var html = '';
-        //             var i;
-        //             for(i=0; i < data.length; i++) {
-        //                 html += '<option>' + data[i].GUGATid + '</option>';
-        //             }
-        //             $('.subkategori').html(html);
-        //         }
-        //     })
-        // },
 
         // Ajax Objek Digugat
         $(document).on('click', '#idObjekDigugat', function() {

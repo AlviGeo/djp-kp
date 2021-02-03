@@ -150,7 +150,7 @@ class MPengajuan extends Model
 	public function get_KetetapanPajak($id = false)
 	{
 
-		$builder = $this->db->query("SELECT jenisketetapan.JKnama,ketetapanpajak.KPNoKetetapan, ketetapanpajak.KPTgl, ketetapanpajak.KPNilai FROM jenisketetapan left JOIN ketetapanpajak ON jenisketetapan.JKid = ketetapanpajak.KPJKid WHERE ketetapanpajak.KPajuanId = $id");
+		$builder = $this->db->query("SELECT jenisketetapan.JKnama, ketetapanpajak.KPNoKetetapan, ketetapanpajak.KPTgl, ketetapanpajak.KPNilai FROM jenisketetapan left JOIN ketetapanpajak ON jenisketetapan.JKid = ketetapanpajak.KPJKid WHERE ketetapanpajak.KPajuanId = $id");
 		return $builder->getResultArray();
 	}
 
